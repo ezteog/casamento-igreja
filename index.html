@@ -11,9 +11,9 @@
 
   <style>
     :root { --ivory:#FBF7F0; --green:#2E4034; --gold:#B89A5E; --soft:#6b6157; }
-    * { box-sizing: border-box; }
+    * { box-sizing:border-box; }
 
-    /* MOBILE-FIRST: base pensada pro celular */
+    /* MOBILE-FIRST */
     body {
       margin:0; background:var(--ivory); color:var(--green);
       font-family:'Inter',sans-serif; font-weight:300; line-height:1.6;
@@ -21,17 +21,16 @@
     }
     h1,h2,h3 { font-family:'Cormorant Garamond',serif; font-weight:500; margin:0; }
 
-    .hero {
-      min-height:88vh; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; text-align:center; padding:1.5rem;
-    }
+    .cover { display:block; width:100%; height:auto; }
+
+    .intro-block { text-align:center; padding:2.5rem 1.5rem 1rem; }
     .eyebrow {
       letter-spacing:0.25em; font-size:0.7rem; text-transform:uppercase;
-      color:var(--gold); margin-bottom:1.2rem;
+      color:var(--gold); margin-bottom:1rem;
     }
-    .hero h1 { font-size:2.8rem; line-height:1.1; }
+    .intro-block h1 { font-size:2.8rem; line-height:1.1; }
     .amp { color:var(--gold); font-style:italic; }
-    .info { margin-top:1.2rem; font-size:0.95rem; letter-spacing:0.03em; }
+    .info { margin-top:1rem; font-size:0.95rem; letter-spacing:0.03em; }
     .divider { width:50px; height:1px; background:var(--gold); margin:1.2rem auto; }
 
     section { padding:2.5rem 1.2rem; text-align:center; }
@@ -69,9 +68,9 @@
     .note { font-size:0.85rem; color:var(--soft); margin-top:1.2rem; }
     footer { text-align:center; padding:2rem 1.2rem; color:var(--soft); font-size:0.8rem; }
 
-    /* TELAS MAIORES: só aqui o layout "cresce" */
     @media (min-width:700px) {
-      .hero h1 { font-size:4.5rem; }
+      .cover { max-height:80vh; object-fit:cover; }
+      .intro-block h1 { font-size:4.5rem; }
       .info { font-size:1rem; }
       section { padding:3rem 1.5rem; max-width:900px; margin:0 auto; }
       section h2 { font-size:2.3rem; }
@@ -82,15 +81,18 @@
 </head>
 <body>
 
-  <div class="hero">
-    <div class="eyebrow">Com a bênção de Deus</div>
-    <h1>Patrícia <span class="amp">&amp;</span> Caio</h1>
-    <div class="divider"></div>
-    <div class="info">
-      04 de Julho de 2026 &nbsp;•&nbsp; Paróquia Nossa Senhora do Brasil<br>
-      Av. Portugal, 772 — Urca, Rio de Janeiro
+  <header>
+    <img class="cover" src="capa.jpg" alt="Patrícia e Caio ao pôr do sol no Rio de Janeiro">
+    <div class="intro-block">
+      <div class="eyebrow">Com a bênção de Deus</div>
+      <h1>Patrícia <span class="amp">&amp;</span> Caio</h1>
+      <div class="divider"></div>
+      <div class="info">
+        04 de Julho de 2026 &nbsp;•&nbsp; Paróquia Nossa Senhora do Brasil<br>
+        Av. Portugal, 772 — Urca, Rio de Janeiro
+      </div>
     </div>
-  </div>
+  </header>
 
   <section>
     <h2>Bem-vindos</h2>
@@ -113,32 +115,32 @@
       <div class="gift">
         <div class="tag">Lua de mel</div><h3>Jantar romântico</h3>
         <div class="value">Sugestão: R$ 150</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+        <button class="btn" onclick="presentear()">Presentear</button>
       </div>
       <div class="gift">
         <div class="tag">Lua de mel</div><h3>Passeio a dois</h3>
         <div class="value">Sugestão: R$ 200</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+        <button class="btn" onclick="presentear()">Presentear</button>
       </div>
       <div class="gift">
         <div class="tag">Cozinha</div><h3>Jogo de panelas</h3>
         <div class="value">Sugestão: R$ 300</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+        <button class="btn" onclick="presentear()">Presentear</button>
       </div>
       <div class="gift">
         <div class="tag">Casa</div><h3>Jogo de cama</h3>
         <div class="value">Sugestão: R$ 180</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+        <button class="btn" onclick="presentear()">Presentear</button>
       </div>
       <div class="gift">
         <div class="tag">Casa</div><h3>Cafeteira</h3>
         <div class="value">Sugestão: R$ 250</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+        <button class="btn" onclick="presentear()">Presentear</button>
       </div>
       <div class="gift">
         <div class="tag">Carinho</div><h3>Contribuição livre</h3>
         <div class="value">Qualquer valor</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+        <button class="btn" onclick="presentear()">Presentear</button>
       </div>
     </div>
   </section>
