@@ -96,4 +96,76 @@
     <h2>Bem-vindos</h2>
     <div class="divider"></div>
     <p class="intro">
-      É com muita
+      É com muita alegria que convidamos você para celebrar conosco a nossa
+      união diante de Deus. Sua presença já é o maior presente — mas, para
+      quem desejar nos abençoar de outra forma, preparamos a lista abaixo. 🤍
+    </p>
+  </section>
+
+  <section>
+    <h2>Lista de Presentes</h2>
+    <div class="divider"></div>
+    <p class="intro">
+      Todos os presentes são feitos via <strong>PIX</strong>. Escolha um valor
+      que represente seu carinho e toque em "Presentear" para copiar a chave.
+    </p>
+    <div class="gifts">
+      <div class="gift">
+        <div class="tag">Lua de mel</div><h3>Jantar romântico</h3>
+        <div class="value">Sugestão: R$ 150</div>
+        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+      </div>
+      <div class="gift">
+        <div class="tag">Lua de mel</div><h3>Passeio a dois</h3>
+        <div class="value">Sugestão: R$ 200</div>
+        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+      </div>
+      <div class="gift">
+        <div class="tag">Cozinha</div><h3>Jogo de panelas</h3>
+        <div class="value">Sugestão: R$ 300</div>
+        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+      </div>
+      <div class="gift">
+        <div class="tag">Casa</div><h3>Jogo de cama</h3>
+        <div class="value">Sugestão: R$ 180</div>
+        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+      </div>
+      <div class="gift">
+        <div class="tag">Casa</div><h3>Cafeteira</h3>
+        <div class="value">Sugestão: R$ 250</div>
+        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+      </div>
+      <div class="gift">
+        <div class="tag">Carinho</div><h3>Contribuição livre</h3>
+        <div class="value">Qualquer valor</div>
+        <button class="btn" onclick="presentear()">Presentear via PIX</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Como presentear</h2>
+    <div class="divider"></div>
+    <div class="pix-box">
+      <p>Copie nossa chave PIX e envie pelo app do seu banco:</p>
+      <div class="pix-key" id="pixKey">46ae26bb-b53f-499b-b071-b69f487b3fe3</div>
+      <button class="btn" onclick="presentear()">Copiar chave PIX</button>
+      <p class="note">Prefere transferência bancária? É só falar com a gente. 💛</p>
+    </div>
+  </section>
+
+  <footer>Feito com amor para o nosso grande dia.</footer>
+
+  <script>
+    function presentear() {
+      const chave = document.getElementById("pixKey").textContent.trim();
+      navigator.clipboard.writeText(chave).then(function () {
+        alert("Chave PIX copiada! 🤍\n\nAbra o app do seu banco, escolha PIX > Copia e Cola e finalize com o valor que desejar. Muito obrigado!");
+      }).catch(function () {
+        alert("Copie a chave PIX: " + chave);
+      });
+    }
+  </script>
+
+</body>
+</html>
