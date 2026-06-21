@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root { --ivory:#FBF7F0; --green:#2E4034; --gold:#B89A5E; --soft:#6b6157; }
     * { box-sizing:border-box; }
 
-    /* MOBILE-FIRST */
     body {
       margin:0; background:var(--ivory); color:var(--green);
       font-family:'Inter',sans-serif; font-weight:300; line-height:1.6;
@@ -24,10 +24,7 @@
     .cover { display:block; width:100%; height:auto; }
 
     .intro-block { text-align:center; padding:2.5rem 1.5rem 1rem; }
-    .eyebrow {
-      letter-spacing:0.25em; font-size:0.7rem; text-transform:uppercase;
-      color:var(--gold); margin-bottom:1rem;
-    }
+    .eyebrow { letter-spacing:0.25em; font-size:0.7rem; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
     .intro-block h1 { font-size:2.8rem; line-height:1.1; }
     .amp { color:var(--gold); font-style:italic; }
     .info { margin-top:1rem; font-size:0.95rem; letter-spacing:0.03em; }
@@ -35,19 +32,16 @@
 
     section { padding:2.5rem 1.2rem; text-align:center; }
     section h2 { font-size:1.9rem; margin-bottom:0.3rem; }
-    .intro { margin:0 auto 2rem; color:var(--soft); font-size:0.95rem; }
+    .intro { margin:0 auto 2rem; color:var(--soft); font-size:0.95rem; max-width:560px; }
 
-    .gifts { display:grid; grid-template-columns:1fr; gap:1.2rem; }
+    .gifts { display:grid; grid-template-columns:1fr; gap:1.2rem; max-width:1000px; margin:0 auto; }
     .gift {
       background:#fff; border:1px solid #ece5d8; border-radius:16px;
       padding:1.6rem 1.2rem; display:flex; flex-direction:column; align-items:center;
+      justify-content:space-between;
     }
-    .tag {
-      font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase;
-      color:var(--gold); margin-bottom:0.5rem;
-    }
-    .gift h3 { font-size:1.4rem; margin-bottom:0.3rem; }
-    .value { color:var(--soft); margin-bottom:1rem; font-size:0.9rem; }
+    .gift h3 { font-size:1.35rem; margin-bottom:0.5rem; }
+    .value { color:var(--soft); margin-bottom:1.1rem; font-size:0.95rem; }
 
     .btn {
       background:var(--green); color:var(--ivory); border:none; border-radius:999px;
@@ -56,25 +50,34 @@
       width:100%; max-width:280px;
     }
     .btn:active { background:#25332a; }
+    .btn-outline { background:none; color:var(--green); border:1px solid #d8cdbb; }
 
-    .pix-box {
-      background:#fff; border:1px solid #ece5d8; border-radius:16px;
-      padding:1.6rem; margin:0 auto; max-width:480px;
-    }
-    .pix-key {
-      font-family:monospace; background:var(--ivory); padding:0.8rem;
-      border-radius:8px; word-break:break-all; margin:1rem 0; font-size:0.95rem;
-    }
+    .pix-box { background:#fff; border:1px solid #ece5d8; border-radius:16px; padding:1.6rem; margin:0 auto; max-width:480px; }
+    .pix-key { font-family:monospace; background:var(--ivory); padding:0.8rem; border-radius:8px; word-break:break-all; margin:1rem 0; font-size:0.95rem; }
     .note { font-size:0.85rem; color:var(--soft); margin-top:1.2rem; }
     footer { text-align:center; padding:2rem 1.2rem; color:var(--soft); font-size:0.8rem; }
+
+    /* MODAL */
+    .overlay { position:fixed; inset:0; background:rgba(20,16,12,0.6); display:none; align-items:center; justify-content:center; padding:1rem; z-index:50; }
+    .overlay.open { display:flex; }
+    .modal { background:#fff; border-radius:20px; max-width:380px; width:100%; padding:2rem 1.5rem 1.6rem; text-align:center; position:relative; max-height:92vh; overflow-y:auto; }
+    .modal .close { position:absolute; top:0.6rem; right:0.9rem; font-size:1.5rem; line-height:1; cursor:pointer; color:var(--soft); background:none; border:none; }
+    .modal h3 { font-size:1.5rem; margin-bottom:0.2rem; }
+    .modal .eyebrow { margin-bottom:0.8rem; }
+    .big-value { font-size:2rem; color:var(--green); font-family:'Cormorant Garamond',serif; margin:0.5rem 0 1.4rem; }
+    #qrcode { display:flex; justify-content:center; margin:0.5rem 0 1rem; }
+    #qrcode img, #qrcode canvas { padding:8px; background:#fff; border:1px solid #ece5d8; border-radius:8px; }
+    .pix-code { font-family:monospace; font-size:0.72rem; background:var(--ivory); padding:0.7rem; border-radius:8px; word-break:break-all; margin:0.4rem 0 0.9rem; max-height:88px; overflow-y:auto; text-align:left; }
+    .modal-note { font-size:0.8rem; color:var(--soft); margin-top:0.8rem; }
+    .btn-row { display:flex; flex-direction:column; gap:0.6rem; align-items:center; }
 
     @media (min-width:700px) {
       .cover { max-height:80vh; object-fit:cover; }
       .intro-block h1 { font-size:4.5rem; }
       .info { font-size:1rem; }
-      section { padding:3rem 1.5rem; max-width:900px; margin:0 auto; }
+      section { padding:3rem 1.5rem; }
       section h2 { font-size:2.3rem; }
-      .gifts { grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; }
+      .gifts { grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:1.5rem; }
       .btn:hover { background:#25332a; }
     }
   </style>
@@ -99,8 +102,8 @@
     <div class="divider"></div>
     <p class="intro">
       É com muita alegria que convidamos você para celebrar conosco a nossa
-      união diante de Deus. Sua presença já é nosso maior presente — mas, para
-      quem desejar, preparamos uma lista de presentes abaixo. 🤍
+      união diante de Deus. Sua presença já é o maior presente — mas, para
+      quem desejar nos abençoar de outra forma, preparamos a lista abaixo. 🤍
     </p>
   </section>
 
@@ -108,65 +111,206 @@
     <h2>Lista de Presentes</h2>
     <div class="divider"></div>
     <p class="intro">
-      Todos os presentes são feitos via <strong>PIX</strong>. Escolha um valor
-      que represente seu carinho e toque em "Presentear" para copiar a chave.
+      Escolha um presente que represente seu carinho e toque em "Presentear".
+      Todos os presentes são feitos via <strong>PIX</strong>, com o valor já
+      preenchido. 🤍
     </p>
-    <div class="gifts">
-      <div class="gift">
-        <div class="tag">Lua de mel</div><h3>Jantar romântico</h3>
-        <div class="value">Sugestão: R$ 150</div>
-        <button class="btn" onclick="presentear()">Presentear</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Lua de mel</div><h3>Passeio a dois</h3>
-        <div class="value">Sugestão: R$ 200</div>
-        <button class="btn" onclick="presentear()">Presentear</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Cozinha</div><h3>Jogo de panelas</h3>
-        <div class="value">Sugestão: R$ 300</div>
-        <button class="btn" onclick="presentear()">Presentear</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Casa</div><h3>Jogo de cama</h3>
-        <div class="value">Sugestão: R$ 180</div>
-        <button class="btn" onclick="presentear()">Presentear</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Casa</div><h3>Cafeteira</h3>
-        <div class="value">Sugestão: R$ 250</div>
-        <button class="btn" onclick="presentear()">Presentear</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Carinho</div><h3>Contribuição livre</h3>
-        <div class="value">Qualquer valor</div>
-        <button class="btn" onclick="presentear()">Presentear</button>
-      </div>
-    </div>
+    <div class="gifts" id="gifts"></div>
   </section>
 
   <section>
-    <h2>Como presentear</h2>
+    <h2>Outra quantia</h2>
     <div class="divider"></div>
     <div class="pix-box">
-      <p>Copie nossa chave PIX e envie pelo app do seu banco:</p>
+      <p>Prefere contribuir com um valor livre? Copie nossa chave PIX:</p>
       <div class="pix-key" id="pixKey">46ae26bb-b53f-499b-b071-b69f487b3fe3</div>
-      <button class="btn" onclick="presentear()">Copiar chave PIX</button>
+      <button class="btn" onclick="copiarChaveLivre()">Copiar chave PIX</button>
       <p class="note">Prefere transferência bancária? É só falar com a gente. 💛</p>
     </div>
   </section>
 
   <footer>Feito com amor para o nosso grande dia.</footer>
 
+  <!-- MODAL DE PRESENTE -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <button class="close" onclick="fecharModal()" aria-label="Fechar">&times;</button>
+
+      <div id="step1">
+        <div class="eyebrow">Você escolheu presentear</div>
+        <h3 id="giftName"></h3>
+        <div class="big-value" id="giftValue"></div>
+        <div class="btn-row">
+          <button class="btn" onclick="confirmarPresente()">Confirmar</button>
+          <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+        </div>
+      </div>
+
+      <div id="step2" style="display:none;">
+        <div class="eyebrow">Pague via PIX</div>
+        <h3 id="giftName2"></h3>
+        <div class="big-value" id="giftValue2"></div>
+        <div id="qrcode"></div>
+        <p class="modal-note">Escaneie o QR Code no app do seu banco, ou copie o código abaixo (PIX Copia e Cola):</p>
+        <div class="pix-code" id="pixCode"></div>
+        <div class="btn-row">
+          <button class="btn" onclick="copiarPix()">Copiar código PIX</button>
+          <button class="btn btn-outline" onclick="fecharModal()">Fechar</button>
+        </div>
+        <p class="modal-note">O valor já vem preenchido. Muito obrigado pelo carinho! 🤍</p>
+      </div>
+    </div>
+  </div>
+
   <script>
-    function presentear() {
-      const chave = document.getElementById("pixKey").textContent.trim();
-      navigator.clipboard.writeText(chave).then(function () {
-        alert("Chave PIX copiada! 🤍\n\nAbra o app do seu banco, escolha PIX > Copia e Cola e finalize com o valor que desejar. Muito obrigado!");
-      }).catch(function () {
-        alert("Copie a chave PIX: " + chave);
-      });
+    /* ===== CONFIGURAÇÃO ===== */
+    var CHAVE_PIX = "46ae26bb-b53f-499b-b071-b69f487b3fe3";
+    var NOME_RECEBEDOR = "Caio Goetze";      // máx 25 caracteres, sem acento
+    var CIDADE = "RIO DE JANEIRO";           // máx 15 caracteres, sem acento
+
+    /* ===== LISTA DE PRESENTES (nome + valor em reais) ===== */
+    var presentes = [
+      ["Almoço com Limoncello em Sorrento", 427.93],
+      ["Aluguel de Vespa em Sorrento", 604.08],
+      ["Ar Condicionado Split para o Caio não passar mal de calor", 1693.09],
+      ["Aula de culinária italiana", 863.12],
+      ["Aulas de Canto para a Pat parar de cantar mal pela casa", 688.01],
+      ["Cadeira de Balanço Suspensa", 2227.75],
+      ["Café da manhã especial", 216.56],
+      ["Contribuição para a noiva comer Mc Fish em todas as cidades da Itália", 434.15],
+      ["Contribuição para a reforma da nossa casa", 1071.39],
+      ["Contribuição para comprar Euros", 501.50],
+      ["Contribuição para o noivo estudar sobre ufologia", 656.93],
+      ["Decoração para deixar nossa casa mais bonita", 501.50],
+      ["Degustação de vinhos na Toscana", 541.91],
+      ["Drinks refrescantes na Costa Amalfitana", 200.00],
+      ["Duas entradas no Maracanã para assistir o Fluminense em grande estilo", 1071.39],
+      ["Entrada + Guia Castello Scaligero", 501.50],
+      ["Escrivaninha nova para a Pat", 812.35],
+      ["Fritadeira Elétrica Airfryer", 402.03],
+      ["Jantar em Sorrento (La Cantinaccia del Popolo)", 760.54],
+      ["Jantar em Trastevere", 449.69],
+      ["Jantar Hostaria Osottoosopra (Veneza)", 645.53],
+      ["Jantar inesquecível em Roma", 708.73],
+      ["Jantar romântico em Florença", 449.69],
+      ["Jantar romântico para comemorar o primeiro mês casados", 346.08],
+      ["Jogo de Lençóis de Hotel", 645.53],
+      ["Jogo de Panelas Completo", 541.91],
+      ["Jogo de Toalhas Algodão Egípcio", 376.13],
+      ["Kit 4 Travesseiros Hotel 5 Estrelas", 532.59],
+      ["Lava e Seca Brastemp", 4134.29],
+      ["Lava-louças Brastemp 8 serviços", 2175.94],
+      ["Massagem relaxante para o casal", 864.16],
+      ["Multiprocessador Philco PMP1600P 1700W", 602.01],
+      ["Máquina de café expresso", 604.08],
+      ["Noite de delivery pré viagem de Lua de Mel", 267.08],
+      ["Noite especial sem sair da cidade", 1278.62],
+      ["Passeio de barco pela Ilha de Capri", 2590.41],
+      ["Passeio de Bike noturno em Roma", 407.00],
+      ["Passeio de Bike pelo Lago di Garda", 247.44],
+      ["Passeio pelo Vaticano", 412.39],
+      ["Passeio romântico de gôndolas em Veneza", 655.89],
+      ["Pizza Napoletana em Nápoles", 200.00],
+      ["Poltrona de Massagem Future", 9118.23],
+      ["Press Grill 180° Mondial 1800W - PG-02", 289.09],
+      ["Primeira roupinha do Fluminense do(a) nosso(a) primeiro(a) filho(a)", 235.00],
+      ["Queijos & Vinhos para curtir o pôr do sol em Toscana", 295.30],
+      ["Robô Aspirador inteligente", 5387.01],
+      ["Sofá novo super confortável", 2485.55],
+      ["Termas de Sirmione (Aquaria)", 843.44],
+      ["Toldo pra varanda e dias de sol", 2590.41],
+      ["Tour Grotte di Catullo - Sirmione", 864.16],
+      ["Tour pela Costa Amalfitana", 760.44],
+      ["TV para assistir a Copa do Mundo (a nossa é a mesma desde o 7x1)", 1588.44],
+      ["Upgrade inesperado na lua de mel", 2590.41],
+      ["Verba para financiar a Coquinha Gelada da noiva pelo resto do ano", 553.31],
+      ["Verba para o noivo experimentar Gelattos Italianos em cada cidade da viagem", 936.69],
+      ["Viagem com a Amorinha para um hotel que aceita cachorro", 1278.62]
+    ];
+
+    /* ===== UTILITÁRIOS ===== */
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
     }
+    function pad2(n){ return String(n).padStart(2,'0'); }
+    function field(id, value){ return id + pad2(value.length) + value; }
+    function crc16(payload){
+      var crc = 0xFFFF;
+      for (var i=0;i<payload.length;i++){
+        crc ^= payload.charCodeAt(i) << 8;
+        for (var j=0;j<8;j++){
+          if (crc & 0x8000) crc = (crc << 1) ^ 0x1021;
+          else crc = crc << 1;
+          crc &= 0xFFFF;
+        }
+      }
+      return crc.toString(16).toUpperCase().padStart(4,'0');
+    }
+    function pixPayload(amount){
+      var mai = field('26', field('00','br.gov.bcb.pix') + field('01', CHAVE_PIX));
+      var amt = amount ? field('54', Number(amount).toFixed(2)) : '';
+      var p = field('00','01') + mai + field('52','0000') + field('53','986')
+            + amt + field('58','BR') + field('59', NOME_RECEBEDOR) + field('60', CIDADE)
+            + field('62', field('05','***')) + '6304';
+      return p + crc16(p);
+    }
+
+    /* ===== RENDERIZA OS PRESENTES ===== */
+    var listaEl = document.getElementById('gifts');
+    presentes.forEach(function(item){
+      var nome = item[0], valor = item[1];
+      var card = document.createElement('div');
+      card.className = 'gift';
+      var h = document.createElement('h3'); h.textContent = nome;
+      var v = document.createElement('div'); v.className = 'value'; v.textContent = formatBRL(valor);
+      var b = document.createElement('button'); b.className = 'btn'; b.textContent = 'Presentear';
+      b.addEventListener('click', function(){ abrirModal(nome, valor); });
+      card.appendChild(h); card.appendChild(v); card.appendChild(b);
+      listaEl.appendChild(card);
+    });
+
+    /* ===== FLUXO DO MODAL ===== */
+    var valorAtual = 0, nomeAtual = '';
+    var overlay = document.getElementById('overlay');
+
+    function abrirModal(nome, valor){
+      nomeAtual = nome; valorAtual = valor;
+      document.getElementById('giftName').textContent = nome;
+      document.getElementById('giftValue').textContent = formatBRL(valor);
+      document.getElementById('step1').style.display = 'block';
+      document.getElementById('step2').style.display = 'none';
+      overlay.classList.add('open');
+    }
+
+    function confirmarPresente(){
+      document.getElementById('giftName2').textContent = nomeAtual;
+      document.getElementById('giftValue2').textContent = formatBRL(valorAtual);
+      var payload = pixPayload(valorAtual);
+      document.getElementById('pixCode').textContent = payload;
+      var qrEl = document.getElementById('qrcode');
+      qrEl.innerHTML = '';
+      if (typeof QRCode !== 'undefined'){
+        new QRCode(qrEl, { text: payload, width:200, height:200, correctLevel: QRCode.CorrectLevel.M });
+      }
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+    }
+
+    function copiarPix(){
+      var code = document.getElementById('pixCode').textContent;
+      navigator.clipboard.writeText(code).then(function(){
+        alert("Código PIX copiado! 🤍\n\nAbra o app do seu banco, escolha PIX > Copia e Cola, cole e finalize. O valor já vem preenchido.");
+      }).catch(function(){ alert("Copie o código PIX:\n\n" + code); });
+    }
+
+    function copiarChaveLivre(){
+      navigator.clipboard.writeText(CHAVE_PIX).then(function(){
+        alert("Chave PIX copiada! 🤍");
+      }).catch(function(){ alert("Copie a chave PIX: " + CHAVE_PIX); });
+    }
+
+    function fecharModal(){ overlay.classList.remove('open'); }
+    overlay.addEventListener('click', function(e){ if (e.target === overlay) fecharModal(); });
   </script>
 
 </body>
