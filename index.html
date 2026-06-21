@@ -3,78 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosso Casamento</title>
+  <title>Patrícia &amp; Caio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --ivory: #FBF7F0;
-      --green: #2E4034;
-      --gold: #B89A5E;
-      --soft: #6b6157;
-    }
+    :root { --ivory:#FBF7F0; --green:#2E4034; --gold:#B89A5E; --soft:#6b6157; }
     * { box-sizing: border-box; }
+
+    /* MOBILE-FIRST: base pensada pro celular */
     body {
-      margin: 0; background: var(--ivory); color: var(--green);
-      font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.6;
+      margin:0; background:var(--ivory); color:var(--green);
+      font-family:'Inter',sans-serif; font-weight:300; line-height:1.6;
+      -webkit-text-size-adjust:100%;
     }
-    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; margin: 0; }
+    h1,h2,h3 { font-family:'Cormorant Garamond',serif; font-weight:500; margin:0; }
+
     .hero {
-      min-height: 90vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center; padding: 2rem;
+      min-height:88vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; text-align:center; padding:1.5rem;
     }
     .eyebrow {
-      letter-spacing: 0.3em; font-size: 0.75rem; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1.5rem;
+      letter-spacing:0.25em; font-size:0.7rem; text-transform:uppercase;
+      color:var(--gold); margin-bottom:1.2rem;
     }
-    .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; }
-    .amp { color: var(--gold); font-style: italic; }
-    .info { margin-top: 1.5rem; letter-spacing: 0.05em; }
-    .divider { width: 60px; height: 1px; background: var(--gold); margin: 1.5rem auto; }
-    section { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; text-align: center; }
-    section h2 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-    .intro { max-width: 600px; margin: 0 auto 2.5rem; color: var(--soft); }
-    .gifts {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;
-    }
+    .hero h1 { font-size:2.8rem; line-height:1.1; }
+    .amp { color:var(--gold); font-style:italic; }
+    .info { margin-top:1.2rem; font-size:0.95rem; letter-spacing:0.03em; }
+    .divider { width:50px; height:1px; background:var(--gold); margin:1.2rem auto; }
+
+    section { padding:2.5rem 1.2rem; text-align:center; }
+    section h2 { font-size:1.9rem; margin-bottom:0.3rem; }
+    .intro { margin:0 auto 2rem; color:var(--soft); font-size:0.95rem; }
+
+    .gifts { display:grid; grid-template-columns:1fr; gap:1.2rem; }
     .gift {
-      background: #fff; border: 1px solid #ece5d8; border-radius: 16px;
-      padding: 1.8rem 1.2rem; display: flex; flex-direction: column; align-items: center;
+      background:#fff; border:1px solid #ece5d8; border-radius:16px;
+      padding:1.6rem 1.2rem; display:flex; flex-direction:column; align-items:center;
     }
     .tag {
-      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.6rem;
+      font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:0.5rem;
     }
-    .gift h3 { font-size: 1.5rem; margin-bottom: 0.4rem; }
-    .value { color: var(--soft); margin-bottom: 1.2rem; }
+    .gift h3 { font-size:1.4rem; margin-bottom:0.3rem; }
+    .value { color:var(--soft); margin-bottom:1rem; font-size:0.9rem; }
+
     .btn {
-      background: var(--green); color: var(--ivory); border: none; border-radius: 999px;
-      padding: 0.7rem 1.6rem; font-family: 'Inter', sans-serif; font-size: 0.9rem;
-      letter-spacing: 0.05em; cursor: pointer; transition: background 0.2s ease;
+      background:var(--green); color:var(--ivory); border:none; border-radius:999px;
+      padding:0.8rem 1.6rem; font-family:'Inter',sans-serif; font-size:0.95rem;
+      letter-spacing:0.04em; cursor:pointer; transition:background 0.2s ease;
+      width:100%; max-width:280px;
     }
-    .btn:hover { background: #25332a; }
+    .btn:active { background:#25332a; }
+
     .pix-box {
-      background: #fff; border: 1px solid #ece5d8; border-radius: 16px;
-      padding: 2rem; max-width: 480px; margin: 0 auto;
+      background:#fff; border:1px solid #ece5d8; border-radius:16px;
+      padding:1.6rem; margin:0 auto; max-width:480px;
     }
     .pix-key {
-      font-family: monospace; background: var(--ivory); padding: 0.8rem;
-      border-radius: 8px; word-break: break-all; margin: 1rem 0;
+      font-family:monospace; background:var(--ivory); padding:0.8rem;
+      border-radius:8px; word-break:break-all; margin:1rem 0; font-size:0.95rem;
     }
-    footer { text-align: center; padding: 2rem; color: var(--soft); font-size: 0.85rem; }
+    .note { font-size:0.85rem; color:var(--soft); margin-top:1.2rem; }
+    footer { text-align:center; padding:2rem 1.2rem; color:var(--soft); font-size:0.8rem; }
+
+    /* TELAS MAIORES: só aqui o layout "cresce" */
+    @media (min-width:700px) {
+      .hero h1 { font-size:4.5rem; }
+      .info { font-size:1rem; }
+      section { padding:3rem 1.5rem; max-width:900px; margin:0 auto; }
+      section h2 { font-size:2.3rem; }
+      .gifts { grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; }
+      .btn:hover { background:#25332a; }
+    }
   </style>
 </head>
 <body>
 
   <div class="hero">
     <div class="eyebrow">Com a bênção de Deus</div>
-    <h1>[NOME DA NOIVA] <span class="amp">&</span> [SEU NOME]</h1>
+    <h1>Patrícia <span class="amp">&amp;</span> Caio</h1>
     <div class="divider"></div>
     <div class="info">
-      [DIA] de [MÊS] de [ANO] &nbsp;•&nbsp; [NOME DA IGREJA]<br>[CIDADE]
+      04 de Julho de 2026 &nbsp;•&nbsp; Paróquia Nossa Senhora do Brasil<br>
+      Av. Portugal, 772 — Urca, Rio de Janeiro
     </div>
   </div>
 
@@ -82,75 +96,4 @@
     <h2>Bem-vindos</h2>
     <div class="divider"></div>
     <p class="intro">
-      É com muita alegria que convidamos você para celebrar conosco a nossa
-      união diante de Deus. Sua presença já é o maior presente — mas, para
-      quem desejar nos abençoar de outra forma, preparamos a lista abaixo. 🤍
-    </p>
-  </section>
-
-  <section>
-    <h2>Lista de Presentes</h2>
-    <div class="divider"></div>
-    <p class="intro">
-      Todos os presentes são feitos via <strong>PIX</strong>. Escolha um valor
-      que represente seu carinho e toque em "Presentear" para copiar a chave.
-    </p>
-    <div class="gifts">
-      <div class="gift">
-        <div class="tag">Lua de mel</div><h3>Jantar romântico</h3>
-        <div class="value">Sugestão: R$ 150</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Lua de mel</div><h3>Passeio a dois</h3>
-        <div class="value">Sugestão: R$ 200</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Cozinha</div><h3>Jogo de panelas</h3>
-        <div class="value">Sugestão: R$ 300</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Casa</div><h3>Jogo de cama</h3>
-        <div class="value">Sugestão: R$ 180</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Casa</div><h3>Cafeteira</h3>
-        <div class="value">Sugestão: R$ 250</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
-      </div>
-      <div class="gift">
-        <div class="tag">Carinho</div><h3>Contribuição livre</h3>
-        <div class="value">Qualquer valor</div>
-        <button class="btn" onclick="presentear()">Presentear via PIX</button>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Como presentear</h2>
-    <div class="divider"></div>
-    <div class="pix-box">
-      <p>Copie nossa chave PIX e envie pelo app do seu banco:</p>
-      <div class="pix-key" id="pixKey">[SUA CHAVE PIX ALEATÓRIA]</div>
-      <button class="btn" onclick="presentear()">Copiar chave PIX</button>
-    </div>
-  </section>
-
-  <footer>Feito com amor para o nosso grande dia.</footer>
-
-  <script>
-    function presentear() {
-      const chave = document.getElementById("pixKey").textContent.trim();
-      navigator.clipboard.writeText(chave).then(function () {
-        alert("Chave PIX copiada! 🤍\n\nAbra o app do seu banco, escolha PIX > Copia e Cola e finalize com o valor que desejar. Muito obrigado!");
-      }).catch(function () {
-        alert("Copie a chave PIX: " + chave);
-      });
-    }
-  </script>
-
-</body>
-</html>
+      É com muita
