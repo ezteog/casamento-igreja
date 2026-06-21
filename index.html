@@ -40,6 +40,7 @@
       padding:1.6rem 1.2rem; display:flex; flex-direction:column; align-items:center;
       justify-content:space-between;
     }
+    .gift .emoji { font-size:2.6rem; line-height:1; margin-bottom:0.7rem; }
     .gift h3 { font-size:1.35rem; margin-bottom:0.5rem; }
     .value { color:var(--soft); margin-bottom:1.1rem; font-size:0.95rem; }
 
@@ -57,13 +58,13 @@
     .note { font-size:0.85rem; color:var(--soft); margin-top:1.2rem; }
     footer { text-align:center; padding:2rem 1.2rem; color:var(--soft); font-size:0.8rem; }
 
-    /* MODAL */
     .overlay { position:fixed; inset:0; background:rgba(20,16,12,0.6); display:none; align-items:center; justify-content:center; padding:1rem; z-index:50; }
     .overlay.open { display:flex; }
     .modal { background:#fff; border-radius:20px; max-width:380px; width:100%; padding:2rem 1.5rem 1.6rem; text-align:center; position:relative; max-height:92vh; overflow-y:auto; }
     .modal .close { position:absolute; top:0.6rem; right:0.9rem; font-size:1.5rem; line-height:1; cursor:pointer; color:var(--soft); background:none; border:none; }
     .modal h3 { font-size:1.5rem; margin-bottom:0.2rem; }
-    .modal .eyebrow { margin-bottom:0.8rem; }
+    .modal .modal-emoji { font-size:2.6rem; line-height:1; margin-bottom:0.4rem; }
+    .modal .eyebrow { margin-bottom:0.6rem; }
     .big-value { font-size:2rem; color:var(--green); font-family:'Cormorant Garamond',serif; margin:0.5rem 0 1.4rem; }
     #qrcode { display:flex; justify-content:center; margin:0.5rem 0 1rem; }
     #qrcode img, #qrcode canvas { padding:8px; background:#fff; border:1px solid #ece5d8; border-radius:8px; }
@@ -131,12 +132,12 @@
 
   <footer>Feito com amor para o nosso grande dia.</footer>
 
-  <!-- MODAL DE PRESENTE -->
   <div class="overlay" id="overlay">
     <div class="modal">
       <button class="close" onclick="fecharModal()" aria-label="Fechar">&times;</button>
 
       <div id="step1">
+        <div class="modal-emoji" id="giftEmoji"></div>
         <div class="eyebrow">Você escolheu presentear</div>
         <h3 id="giftName"></h3>
         <div class="big-value" id="giftValue"></div>
@@ -163,75 +164,71 @@
   </div>
 
   <script>
-    /* ===== CONFIGURAÇÃO ===== */
     var CHAVE_PIX = "46ae26bb-b53f-499b-b071-b69f487b3fe3";
-    var NOME_RECEBEDOR = "Caio Goetze";      // máx 25 caracteres, sem acento
-    var CIDADE = "RIO DE JANEIRO";           // máx 15 caracteres, sem acento
+    var NOME_RECEBEDOR = "Caio Goetze";
+    var CIDADE = "RIO DE JANEIRO";
 
-    /* ===== LISTA DE PRESENTES (nome + valor em reais) ===== */
+    /* nome, valor, emoji */
     var presentes = [
-      ["Almoço com Limoncello em Sorrento", 427.93],
-      ["Aluguel de Vespa em Sorrento", 604.08],
-      ["Ar Condicionado Split para o Caio não passar mal de calor", 1693.09],
-      ["Aula de culinária italiana", 863.12],
-      ["Aulas de Canto para a Pat parar de cantar mal pela casa", 688.01],
-      ["Cadeira de Balanço Suspensa", 2227.75],
-      ["Café da manhã especial", 216.56],
-      ["Contribuição para a noiva comer Mc Fish em todas as cidades da Itália", 434.15],
-      ["Contribuição para a reforma da nossa casa", 1071.39],
-      ["Contribuição para comprar Euros", 501.50],
-      ["Contribuição para o noivo estudar sobre ufologia", 656.93],
-      ["Decoração para deixar nossa casa mais bonita", 501.50],
-      ["Degustação de vinhos na Toscana", 541.91],
-      ["Drinks refrescantes na Costa Amalfitana", 200.00],
-      ["Duas entradas no Maracanã para assistir o Fluminense em grande estilo", 1071.39],
-      ["Entrada + Guia Castello Scaligero", 501.50],
-      ["Escrivaninha nova para a Pat", 812.35],
-      ["Fritadeira Elétrica Airfryer", 402.03],
-      ["Jantar em Sorrento (La Cantinaccia del Popolo)", 760.54],
-      ["Jantar em Trastevere", 449.69],
-      ["Jantar Hostaria Osottoosopra (Veneza)", 645.53],
-      ["Jantar inesquecível em Roma", 708.73],
-      ["Jantar romântico em Florença", 449.69],
-      ["Jantar romântico para comemorar o primeiro mês casados", 346.08],
-      ["Jogo de Lençóis de Hotel", 645.53],
-      ["Jogo de Panelas Completo", 541.91],
-      ["Jogo de Toalhas Algodão Egípcio", 376.13],
-      ["Kit 4 Travesseiros Hotel 5 Estrelas", 532.59],
-      ["Lava e Seca Brastemp", 4134.29],
-      ["Lava-louças Brastemp 8 serviços", 2175.94],
-      ["Massagem relaxante para o casal", 864.16],
-      ["Multiprocessador Philco PMP1600P 1700W", 602.01],
-      ["Máquina de café expresso", 604.08],
-      ["Noite de delivery pré viagem de Lua de Mel", 267.08],
-      ["Noite especial sem sair da cidade", 1278.62],
-      ["Passeio de barco pela Ilha de Capri", 2590.41],
-      ["Passeio de Bike noturno em Roma", 407.00],
-      ["Passeio de Bike pelo Lago di Garda", 247.44],
-      ["Passeio pelo Vaticano", 412.39],
-      ["Passeio romântico de gôndolas em Veneza", 655.89],
-      ["Pizza Napoletana em Nápoles", 200.00],
-      ["Poltrona de Massagem Future", 9118.23],
-      ["Press Grill 180° Mondial 1800W - PG-02", 289.09],
-      ["Primeira roupinha do Fluminense do(a) nosso(a) primeiro(a) filho(a)", 235.00],
-      ["Queijos & Vinhos para curtir o pôr do sol em Toscana", 295.30],
-      ["Robô Aspirador inteligente", 5387.01],
-      ["Sofá novo super confortável", 2485.55],
-      ["Termas de Sirmione (Aquaria)", 843.44],
-      ["Toldo pra varanda e dias de sol", 2590.41],
-      ["Tour Grotte di Catullo - Sirmione", 864.16],
-      ["Tour pela Costa Amalfitana", 760.44],
-      ["TV para assistir a Copa do Mundo (a nossa é a mesma desde o 7x1)", 1588.44],
-      ["Upgrade inesperado na lua de mel", 2590.41],
-      ["Verba para financiar a Coquinha Gelada da noiva pelo resto do ano", 553.31],
-      ["Verba para o noivo experimentar Gelattos Italianos em cada cidade da viagem", 936.69],
-      ["Viagem com a Amorinha para um hotel que aceita cachorro", 1278.62]
+      ["Almoço com Limoncello em Sorrento", 427.93, "🍋"],
+      ["Aluguel de Vespa em Sorrento", 604.08, "🛵"],
+      ["Ar Condicionado Split para o Caio não passar mal de calor", 1693.09, "❄️"],
+      ["Aula de culinária italiana", 863.12, "👨‍🍳"],
+      ["Aulas de Canto para a Pat parar de cantar mal pela casa", 688.01, "🎤"],
+      ["Cadeira de Balanço Suspensa", 2227.75, "🪑"],
+      ["Café da manhã especial", 216.56, "🥐"],
+      ["Contribuição para a noiva comer Mc Fish em todas as cidades da Itália", 434.15, "🍔"],
+      ["Contribuição para a reforma da nossa casa", 1071.39, "🔨"],
+      ["Contribuição para comprar Euros", 501.50, "💶"],
+      ["Contribuição para o noivo estudar sobre ufologia", 656.93, "🛸"],
+      ["Decoração para deixar nossa casa mais bonita", 501.50, "🖼️"],
+      ["Degustação de vinhos na Toscana", 541.91, "🍷"],
+      ["Drinks refrescantes na Costa Amalfitana", 200.00, "🍹"],
+      ["Duas entradas no Maracanã para assistir o Fluminense em grande estilo", 1071.39, "⚽"],
+      ["Entrada + Guia Castello Scaligero", 501.50, "🏰"],
+      ["Escrivaninha nova para a Pat", 812.35, "🖋️"],
+      ["Fritadeira Elétrica Airfryer", 402.03, "🍟"],
+      ["Jantar em Sorrento (La Cantinaccia del Popolo)", 760.54, "🍽️"],
+      ["Jantar em Trastevere", 449.69, "🍝"],
+      ["Jantar Hostaria Osottoosopra (Veneza)", 645.53, "🍷"],
+      ["Jantar inesquecível em Roma", 708.73, "🍝"],
+      ["Jantar romântico em Florença", 449.69, "🥂"],
+      ["Jantar romântico para comemorar o primeiro mês casados", 346.08, "💑"],
+      ["Jogo de Lençóis de Hotel", 645.53, "🛏️"],
+      ["Jogo de Panelas Completo", 541.91, "🍳"],
+      ["Jogo de Toalhas Algodão Egípcio", 376.13, "🛁"],
+      ["Kit 4 Travesseiros Hotel 5 Estrelas", 532.59, "🛌"],
+      ["Lava e Seca Brastemp", 4134.29, "🧺"],
+      ["Lava-louças Brastemp 8 serviços", 2175.94, "🍽️"],
+      ["Massagem relaxante para o casal", 864.16, "💆"],
+      ["Multiprocessador Philco PMP1600P 1700W", 602.01, "🥣"],
+      ["Máquina de café expresso", 604.08, "☕"],
+      ["Noite de delivery pré viagem de Lua de Mel", 267.08, "🍕"],
+      ["Noite especial sem sair da cidade", 1278.62, "🍿"],
+      ["Passeio de barco pela Ilha de Capri", 2590.41, "⛵"],
+      ["Passeio de Bike noturno em Roma", 407.00, "🚲"],
+      ["Passeio de Bike pelo Lago di Garda", 247.44, "🚲"],
+      ["Passeio pelo Vaticano", 412.39, "⛪"],
+      ["Passeio romântico de gôndolas em Veneza", 655.89, "🛶"],
+      ["Pizza Napoletana em Nápoles", 200.00, "🍕"],
+      ["Poltrona de Massagem Future", 9118.23, "💺"],
+      ["Press Grill 180° Mondial 1800W - PG-02", 289.09, "🥪"],
+      ["Primeira roupinha do Fluminense do(a) nosso(a) primeiro(a) filho(a)", 235.00, "👶"],
+      ["Queijos & Vinhos para curtir o pôr do sol em Toscana", 295.30, "🧀"],
+      ["Robô Aspirador inteligente", 5387.01, "🤖"],
+      ["Sofá novo super confortável", 2485.55, "🛋️"],
+      ["Termas de Sirmione (Aquaria)", 843.44, "♨️"],
+      ["Toldo pra varanda e dias de sol", 2590.41, "⛱️"],
+      ["Tour Grotte di Catullo - Sirmione", 864.16, "🏛️"],
+      ["Tour pela Costa Amalfitana", 760.44, "🏖️"],
+      ["TV para assistir a Copa do Mundo (a nossa é a mesma desde o 7x1)", 1588.44, "📺"],
+      ["Upgrade inesperado na lua de mel", 2590.41, "✈️"],
+      ["Verba para financiar a Coquinha Gelada da noiva pelo resto do ano", 553.31, "🥤"],
+      ["Verba para o noivo experimentar Gelattos Italianos em cada cidade da viagem", 936.69, "🍨"],
+      ["Viagem com a Amorinha para um hotel que aceita cachorro", 1278.62, "🐶"]
     ];
 
-    /* ===== UTILITÁRIOS ===== */
-    function formatBRL(v){
-      return v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
-    }
+    function formatBRL(v){ return v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' }); }
     function pad2(n){ return String(n).padStart(2,'0'); }
     function field(id, value){ return id + pad2(value.length) + value; }
     function crc16(payload){
@@ -239,8 +236,7 @@
       for (var i=0;i<payload.length;i++){
         crc ^= payload.charCodeAt(i) << 8;
         for (var j=0;j<8;j++){
-          if (crc & 0x8000) crc = (crc << 1) ^ 0x1021;
-          else crc = crc << 1;
+          if (crc & 0x8000) crc = (crc << 1) ^ 0x1021; else crc = crc << 1;
           crc &= 0xFFFF;
         }
       }
@@ -255,60 +251,53 @@
       return p + crc16(p);
     }
 
-    /* ===== RENDERIZA OS PRESENTES ===== */
     var listaEl = document.getElementById('gifts');
     presentes.forEach(function(item){
-      var nome = item[0], valor = item[1];
-      var card = document.createElement('div');
-      card.className = 'gift';
+      var nome = item[0], valor = item[1], emoji = item[2];
+      var card = document.createElement('div'); card.className = 'gift';
+      var e = document.createElement('div'); e.className = 'emoji'; e.textContent = emoji;
       var h = document.createElement('h3'); h.textContent = nome;
       var v = document.createElement('div'); v.className = 'value'; v.textContent = formatBRL(valor);
       var b = document.createElement('button'); b.className = 'btn'; b.textContent = 'Presentear';
-      b.addEventListener('click', function(){ abrirModal(nome, valor); });
-      card.appendChild(h); card.appendChild(v); card.appendChild(b);
+      b.addEventListener('click', function(){ abrirModal(nome, valor, emoji); });
+      card.appendChild(e); card.appendChild(h); card.appendChild(v); card.appendChild(b);
       listaEl.appendChild(card);
     });
 
-    /* ===== FLUXO DO MODAL ===== */
     var valorAtual = 0, nomeAtual = '';
     var overlay = document.getElementById('overlay');
 
-    function abrirModal(nome, valor){
+    function abrirModal(nome, valor, emoji){
       nomeAtual = nome; valorAtual = valor;
+      document.getElementById('giftEmoji').textContent = emoji;
       document.getElementById('giftName').textContent = nome;
       document.getElementById('giftValue').textContent = formatBRL(valor);
       document.getElementById('step1').style.display = 'block';
       document.getElementById('step2').style.display = 'none';
       overlay.classList.add('open');
     }
-
     function confirmarPresente(){
       document.getElementById('giftName2').textContent = nomeAtual;
       document.getElementById('giftValue2').textContent = formatBRL(valorAtual);
       var payload = pixPayload(valorAtual);
       document.getElementById('pixCode').textContent = payload;
-      var qrEl = document.getElementById('qrcode');
-      qrEl.innerHTML = '';
+      var qrEl = document.getElementById('qrcode'); qrEl.innerHTML = '';
       if (typeof QRCode !== 'undefined'){
         new QRCode(qrEl, { text: payload, width:200, height:200, correctLevel: QRCode.CorrectLevel.M });
       }
       document.getElementById('step1').style.display = 'none';
       document.getElementById('step2').style.display = 'block';
     }
-
     function copiarPix(){
       var code = document.getElementById('pixCode').textContent;
       navigator.clipboard.writeText(code).then(function(){
         alert("Código PIX copiado! 🤍\n\nAbra o app do seu banco, escolha PIX > Copia e Cola, cole e finalize. O valor já vem preenchido.");
       }).catch(function(){ alert("Copie o código PIX:\n\n" + code); });
     }
-
     function copiarChaveLivre(){
-      navigator.clipboard.writeText(CHAVE_PIX).then(function(){
-        alert("Chave PIX copiada! 🤍");
-      }).catch(function(){ alert("Copie a chave PIX: " + CHAVE_PIX); });
+      navigator.clipboard.writeText(CHAVE_PIX).then(function(){ alert("Chave PIX copiada! 🤍"); })
+      .catch(function(){ alert("Copie a chave PIX: " + CHAVE_PIX); });
     }
-
     function fecharModal(){ overlay.classList.remove('open'); }
     overlay.addEventListener('click', function(e){ if (e.target === overlay) fecharModal(); });
   </script>
